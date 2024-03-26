@@ -6,6 +6,7 @@ from pydantic import BaseModel
 import json
 import requests
 import boto3
+import random
 
 app = FastAPI()
 
@@ -19,6 +20,10 @@ app = FastAPI()
 def zone_apex():
     return {"Hello": "Hello Anisha"}
     
+@app.get("/randomcolor")
+def random_color():
+    colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "black", "white", "brown", "gray"]
+    return {"color": colors[random.randint(0, len(colors) - 1)]}
     
 # api calls within an api!
 @app.get("/github/repos/{user}")
