@@ -22,7 +22,7 @@ def zone_apex():
     
 @app.get("/randomcolor")
 def random_color():
-    colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "black", "white", "brown", "gray"]
+    colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "black", "white", "brown", "gray", "cyan", "magenta", "teal"]
     return {"color": colors[random.randint(0, len(colors) - 1)]}
     
 # api calls within an api!
