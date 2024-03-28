@@ -20,15 +20,18 @@ DBUSER = os.environ.get('DBUSER')
 DBPASS = os.environ.get('DBPASS')
 DB = "gwu8ek"
 
-# The URL for this API has a /docs endpoint that lets you see and test
-# your various endpoints/methods.
-
-# The zone apex is the 'default' page for a URL
-# This will return a simple hello world via GET method.
-
-@app.get("/")  # zone apex
+@app.get("/") 
 def zone_apex():
     return {"Hello": "Hello Anisha"}
+
+@app.get("/albums/{id}")
+def get_albums(id):
+    db = MySQLdb.connect(host=DBHOST, user=DBUSER, passwd=DBPASS, db=DB)
+    c = db.cursor(MySQLdb.cursors.DictCursor)
+    c.execute("SELECT * FROM albums WHERE id=" + id)
+    results = c.fetchall()
+    db.close()
+    return results
     
 @app.get("/randomcolor")
 def random_color():
