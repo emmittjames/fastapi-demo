@@ -7,8 +7,18 @@ import json
 import requests
 import boto3
 import random
+import os
+import MySQLdb
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+
+DBHOST = os.environ.get('DBHOST')
+DBUSER = os.environ.get('DBUSER')
+DBPASS = os.environ.get('DBPASS')
+DB = "gwu8ek"
 
 # The URL for this API has a /docs endpoint that lets you see and test
 # your various endpoints/methods.

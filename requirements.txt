@@ -5,3 +5,4 @@ requests
 uvicorn
 boto3
 redis
+mysqlclient
