@@ -24,6 +24,15 @@ DB = "gwu8ek"
 def zone_apex():
     return {"Hello": "Hello Anisha"}
 
+@app.get("/albums")
+def get_albums():
+    db = MySQLdb.connect(host=DBHOST, user=DBUSER, passwd=DBPASS, db=DB)
+    c = db.cursor(MySQLdb.cursors.DictCursor)
+    c.execute("SELECT * FROM albums")
+    results = c.fetchall()
+    db.close()
+    return results
+
 @app.get("/albums/{id}")
 def get_albums(id):
     db = MySQLdb.connect(host=DBHOST, user=DBUSER, passwd=DBPASS, db=DB)
