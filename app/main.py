@@ -37,7 +37,7 @@ def get_albums():
 def get_albums(id):
     db = MySQLdb.connect(host=DBHOST, user=DBUSER, passwd=DBPASS, db=DB)
     c = db.cursor(MySQLdb.cursors.DictCursor)
-    c.execute("SELECT * FROM albums WHERE id=" + id)
+    c.execute("SELECT * FROM albums WHERE id=%s", id)
     results = c.fetchall()
     db.close()
     return results
