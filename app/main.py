@@ -7,18 +7,40 @@ import json
 import requests
 import boto3
 import random
+import os
+import MySQLdb
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
-# The URL for this API has a /docs endpoint that lets you see and test
-# your various endpoints/methods.
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 
-# The zone apex is the 'default' page for a URL
-# This will return a simple hello world via GET method.
+DBHOST = os.environ.get('DBHOST')
+DBUSER = os.environ.get('DBUSER')
+DBPASS = os.environ.get('DBPASS')
+DB = "gwu8ek"
 
-@app.get("/")  # zone apex
+@app.get("/") 
 def zone_apex():
     return {"Hello": "Hello Anisha"}
+
+@app.get("/albums")
+def get_albums():
+    db = MySQLdb.connect(host=DBHOST, user=DBUSER, passwd=DBPASS, db=DB)
+    c = db.cursor(MySQLdb.cursors.DictCursor)
+    c.execute("SELECT * FROM albums")
+    results = c.fetchall()
+    db.close()
+    return results
+
+@app.get("/albums/{id}")
+def get_albums(id):
+    db = MySQLdb.connect(host=DBHOST, user=DBUSER, passwd=DBPASS, db=DB)
+    c = db.cursor(MySQLdb.cursors.DictCursor)
+    c.execute("SELECT * FROM albums WHERE id=%s", id)
+    results = c.fetchall()
+    db.close()
+    return results
     
 @app.get("/randomcolor")
 def random_color():
